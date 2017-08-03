@@ -50,6 +50,6 @@ class Passport(BaseModel):
     password = models.CharField(max_length=40, help_text='密码')
     email = models.EmailField(help_text='邮箱')
 
-
+    objects = PassportManager()
     class Meta:
         db_table = 's_user_account' # 修改默认表名
