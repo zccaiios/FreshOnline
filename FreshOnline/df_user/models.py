@@ -1,5 +1,6 @@
 from django.db import models
 from db.base_model import BaseModel # 导入抽象模型类
+from utils.get_hash import get_hash
 # Create your models here.
 
 # 继承于models.Manager
@@ -13,7 +14,7 @@ class PassportManager(models.Manager):
         obj = cls()
         # 给obj对象创建对象属性并赋值
         obj.username = username
-        obj.password = password
+        obj.password = get_hash(password)
         obj.email = email
 
         # 保存进数据库
@@ -30,7 +31,7 @@ class PassportManager(models.Manager):
         try:
             if password:
                 # 根据用户名和密码来查
-                obj = self.get(username = username, password = password)
+                obj = self.get(username = username, password = get_hash(password))
             else:
                 # 只根据用户名来查，password为None
                 obj = self.get(username = username)
